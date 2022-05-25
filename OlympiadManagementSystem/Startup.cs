@@ -2,9 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using OlympiadManagement.Application;
+using OlympiadManagement.Infrastructure;
 using OlympiadManagementSystem.Data;
 using System;
 using System.Collections.Generic;
@@ -29,6 +32,14 @@ namespace OlympiadManagementSystem
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
+
+            services.AddDbContext<OlympiadDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default"),
+                b => b.MigrationsAssembly("OlympiadManagementSystem")));
+
+            //services.AddScoped<IOlympiadRepository, OlympiadRepository>();
+            //services.AddScoped<IOlympiadService, OlympiadService>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
