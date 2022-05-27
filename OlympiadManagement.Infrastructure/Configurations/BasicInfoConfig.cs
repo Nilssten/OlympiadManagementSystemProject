@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OlympiadManagement.Core.Aggregates.UserProfileAggregates;
+using OlympiadManagement.Core.Aggregates.UserProfileAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

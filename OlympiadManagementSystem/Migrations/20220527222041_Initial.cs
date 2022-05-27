@@ -8,26 +8,6 @@ namespace OlympiadManagementSystem.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Olympiads",
-                columns: table => new
-                {
-                    OlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Rules_MaxParticipant = table.Column<int>(type: "int", nullable: true),
-                    Rules_MinParticipant = table.Column<int>(type: "int", nullable: true),
-                    Rules_MaxParticipantFromApplicant = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Olympiads", x => x.OlympiadID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "RoleClaims",
                 columns: table => new
                 {
@@ -57,7 +37,7 @@ namespace OlympiadManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "School",
+                name: "Schools",
                 columns: table => new
                 {
                     SchoolID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -68,7 +48,7 @@ namespace OlympiadManagementSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_School", x => x.SchoolID);
+                    table.PrimaryKey("PK_Schools", x => x.SchoolID);
                 });
 
             migrationBuilder.CreateTable(
@@ -174,27 +154,21 @@ namespace OlympiadManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OlympiadResults",
+                name: "Admins",
                 columns: table => new
                 {
-                    OlympiadResultID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ParticipantID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EvaluatorID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Place = table.Column<int>(type: "int", nullable: false),
-                    Points = table.Column<int>(type: "int", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    AdminID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfileUserProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OlympiadResults", x => x.OlympiadResultID);
+                    table.PrimaryKey("PK_Admins", x => x.AdminID);
                     table.ForeignKey(
-                        name: "FK_OlympiadResults_Olympiads_OlympiadID",
-                        column: x => x.OlympiadID,
-                        principalTable: "Olympiads",
-                        principalColumn: "OlympiadID",
-                        onDelete: ReferentialAction.Cascade);
+                        name: "FK_Admins_UserProfiles_ProfileUserProfileID",
+                        column: x => x.ProfileUserProfileID,
+                        principalTable: "UserProfiles",
+                        principalColumn: "UserProfileID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,9 +184,9 @@ namespace OlympiadManagementSystem.Migrations
                 {
                     table.PrimaryKey("PK_Applicants", x => x.ApplicantID);
                     table.ForeignKey(
-                        name: "FK_Applicants_School_SchoolID",
+                        name: "FK_Applicants_Schools_SchoolID",
                         column: x => x.SchoolID,
-                        principalTable: "School",
+                        principalTable: "Schools",
                         principalColumn: "SchoolID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -224,25 +198,18 @@ namespace OlympiadManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Evaluator",
+                name: "Evaluators",
                 columns: table => new
                 {
                     EvaluatorID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Education = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Evaluator", x => x.EvaluatorID);
+                    table.PrimaryKey("PK_Evaluators", x => x.EvaluatorID);
                     table.ForeignKey(
-                        name: "FK_Evaluator_Olympiads_OlympiadID",
-                        column: x => x.OlympiadID,
-                        principalTable: "Olympiads",
-                        principalColumn: "OlympiadID",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Evaluator_UserProfiles_ProfileID",
+                        name: "FK_Evaluators_UserProfiles_ProfileID",
                         column: x => x.ProfileID,
                         principalTable: "UserProfiles",
                         principalColumn: "UserProfileID",
@@ -250,41 +217,177 @@ namespace OlympiadManagementSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Participant",
+                name: "Organizers",
+                columns: table => new
+                {
+                    OrganizerID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Organizers", x => x.OrganizerID);
+                    table.ForeignKey(
+                        name: "FK_Organizers_UserProfiles_ProfileID",
+                        column: x => x.ProfileID,
+                        principalTable: "UserProfiles",
+                        principalColumn: "UserProfileID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Participants",
                 columns: table => new
                 {
                     ParticipantID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProfileID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     SchoolID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ApplicantID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    OlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ApplicantID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Participant", x => x.ParticipantID);
+                    table.PrimaryKey("PK_Participants", x => x.ParticipantID);
                     table.ForeignKey(
-                        name: "FK_Participant_Applicants_ApplicantID",
+                        name: "FK_Participants_Applicants_ApplicantID",
                         column: x => x.ApplicantID,
                         principalTable: "Applicants",
                         principalColumn: "ApplicantID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Participant_Olympiads_OlympiadID",
+                        name: "FK_Participants_Schools_SchoolID",
+                        column: x => x.SchoolID,
+                        principalTable: "Schools",
+                        principalColumn: "SchoolID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Participants_UserProfiles_ProfileID",
+                        column: x => x.ProfileID,
+                        principalTable: "UserProfiles",
+                        principalColumn: "UserProfileID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Olympiads",
+                columns: table => new
+                {
+                    OlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Subject = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rules_MaxParticipant = table.Column<int>(type: "int", nullable: true),
+                    Rules_MinParticipant = table.Column<int>(type: "int", nullable: true),
+                    Rules_MaxParticipantFromApplicant = table.Column<int>(type: "int", nullable: true),
+                    OrganizerID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Olympiads", x => x.OlympiadID);
+                    table.ForeignKey(
+                        name: "FK_Olympiads_Organizers_OrganizerID",
+                        column: x => x.OrganizerID,
+                        principalTable: "Organizers",
+                        principalColumn: "OrganizerID",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Archives",
+                columns: table => new
+                {
+                    ArchiveID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Archives", x => x.ArchiveID);
+                    table.ForeignKey(
+                        name: "FK_Archives_Olympiads_OlympiadID",
                         column: x => x.OlympiadID,
                         principalTable: "Olympiads",
                         principalColumn: "OlympiadID",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "EvaluatorOlympiad",
+                columns: table => new
+                {
+                    EvaluatorsEvaluatorID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OlympiadsOlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EvaluatorOlympiad", x => new { x.EvaluatorsEvaluatorID, x.OlympiadsOlympiadID });
                     table.ForeignKey(
-                        name: "FK_Participant_School_SchoolID",
-                        column: x => x.SchoolID,
-                        principalTable: "School",
-                        principalColumn: "SchoolID",
+                        name: "FK_EvaluatorOlympiad_Evaluators_EvaluatorsEvaluatorID",
+                        column: x => x.EvaluatorsEvaluatorID,
+                        principalTable: "Evaluators",
+                        principalColumn: "EvaluatorID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Participant_UserProfiles_ProfileID",
-                        column: x => x.ProfileID,
-                        principalTable: "UserProfiles",
-                        principalColumn: "UserProfileID",
+                        name: "FK_EvaluatorOlympiad_Olympiads_OlympiadsOlympiadID",
+                        column: x => x.OlympiadsOlympiadID,
+                        principalTable: "Olympiads",
+                        principalColumn: "OlympiadID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OlympiadParticipant",
+                columns: table => new
+                {
+                    OlympiadsOlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParticipantsParticipantID = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OlympiadParticipant", x => new { x.OlympiadsOlympiadID, x.ParticipantsParticipantID });
+                    table.ForeignKey(
+                        name: "FK_OlympiadParticipant_Olympiads_OlympiadsOlympiadID",
+                        column: x => x.OlympiadsOlympiadID,
+                        principalTable: "Olympiads",
+                        principalColumn: "OlympiadID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OlympiadParticipant_Participants_ParticipantsParticipantID",
+                        column: x => x.ParticipantsParticipantID,
+                        principalTable: "Participants",
+                        principalColumn: "ParticipantID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OlympiadResults",
+                columns: table => new
+                {
+                    OlympiadResultID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OlympiadID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ParticipantID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    EvaluatorID = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Place = table.Column<int>(type: "int", nullable: false),
+                    Points = table.Column<int>(type: "int", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastModified = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ArchiveID = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OlympiadResults", x => x.OlympiadResultID);
+                    table.ForeignKey(
+                        name: "FK_OlympiadResults_Archives_ArchiveID",
+                        column: x => x.ArchiveID,
+                        principalTable: "Archives",
+                        principalColumn: "ArchiveID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OlympiadResults_Olympiads_OlympiadID",
+                        column: x => x.OlympiadID,
+                        principalTable: "Olympiads",
+                        principalColumn: "OlympiadID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -305,12 +408,17 @@ namespace OlympiadManagementSystem.Migrations
                         principalColumn: "OlympiadResultID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OlympiadResultParticipant_Participant_ParticipantID",
+                        name: "FK_OlympiadResultParticipant_Participants_ParticipantID",
                         column: x => x.ParticipantID,
-                        principalTable: "Participant",
+                        principalTable: "Participants",
                         principalColumn: "ParticipantID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Admins_ProfileUserProfileID",
+                table: "Admins",
+                column: "ProfileUserProfileID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Applicants_ProfileID",
@@ -323,14 +431,24 @@ namespace OlympiadManagementSystem.Migrations
                 column: "SchoolID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Evaluator_OlympiadID",
-                table: "Evaluator",
+                name: "IX_Archives_OlympiadID",
+                table: "Archives",
                 column: "OlympiadID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Evaluator_ProfileID",
-                table: "Evaluator",
+                name: "IX_EvaluatorOlympiad_OlympiadsOlympiadID",
+                table: "EvaluatorOlympiad",
+                column: "OlympiadsOlympiadID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Evaluators_ProfileID",
+                table: "Evaluators",
                 column: "ProfileID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OlympiadParticipant_ParticipantsParticipantID",
+                table: "OlympiadParticipant",
+                column: "ParticipantsParticipantID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OlympiadResultParticipant_ParticipantID",
@@ -338,35 +456,51 @@ namespace OlympiadManagementSystem.Migrations
                 column: "ParticipantID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OlympiadResults_ArchiveID",
+                table: "OlympiadResults",
+                column: "ArchiveID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OlympiadResults_OlympiadID",
                 table: "OlympiadResults",
                 column: "OlympiadID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_ApplicantID",
-                table: "Participant",
-                column: "ApplicantID");
+                name: "IX_Olympiads_OrganizerID",
+                table: "Olympiads",
+                column: "OrganizerID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_OlympiadID",
-                table: "Participant",
-                column: "OlympiadID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Participant_ProfileID",
-                table: "Participant",
+                name: "IX_Organizers_ProfileID",
+                table: "Organizers",
                 column: "ProfileID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Participant_SchoolID",
-                table: "Participant",
+                name: "IX_Participants_ApplicantID",
+                table: "Participants",
+                column: "ApplicantID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participants_ProfileID",
+                table: "Participants",
+                column: "ProfileID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Participants_SchoolID",
+                table: "Participants",
                 column: "SchoolID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Evaluator");
+                name: "Admins");
+
+            migrationBuilder.DropTable(
+                name: "EvaluatorOlympiad");
+
+            migrationBuilder.DropTable(
+                name: "OlympiadParticipant");
 
             migrationBuilder.DropTable(
                 name: "OlympiadResultParticipant");
@@ -393,10 +527,16 @@ namespace OlympiadManagementSystem.Migrations
                 name: "UserTokens");
 
             migrationBuilder.DropTable(
+                name: "Evaluators");
+
+            migrationBuilder.DropTable(
                 name: "OlympiadResults");
 
             migrationBuilder.DropTable(
-                name: "Participant");
+                name: "Participants");
+
+            migrationBuilder.DropTable(
+                name: "Archives");
 
             migrationBuilder.DropTable(
                 name: "Applicants");
@@ -405,7 +545,10 @@ namespace OlympiadManagementSystem.Migrations
                 name: "Olympiads");
 
             migrationBuilder.DropTable(
-                name: "School");
+                name: "Schools");
+
+            migrationBuilder.DropTable(
+                name: "Organizers");
 
             migrationBuilder.DropTable(
                 name: "UserProfiles");

@@ -1,11 +1,11 @@
-﻿using OlympiadManagement.Core.Aggregates.UserProfileAggregates;
+﻿using OlympiadManagement.Core.Aggregates.UserProfileAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OlympiadManagement.Core.Aggregates.EducationAggregates
+namespace OlympiadManagement.Core.Aggregates.EducationAggregate
 {
     public class School
     {

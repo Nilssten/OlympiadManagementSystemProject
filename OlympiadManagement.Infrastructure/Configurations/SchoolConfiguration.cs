@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OlympiadManagement.Core.Aggregates.EducationAggregates;
+using OlympiadManagement.Core.Aggregates.EducationAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

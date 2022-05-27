@@ -1,5 +1,5 @@
-﻿using OlympiadManagement.Core.Aggregates.EducationAggregates;
-using OlympiadManagement.Core.Aggregates.UserProfileAggregates;
+﻿using OlympiadManagement.Core.Aggregates.EducationAggregate;
+using OlympiadManagement.Core.Aggregates.UserProfileAggregate;
 using System;
 using System.Collections.Generic;
 

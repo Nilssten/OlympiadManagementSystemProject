@@ -1,4 +1,4 @@
-﻿using OlympiadManagement.Core.Aggregates.UserProfileAggregates;
+﻿using OlympiadManagement.Core.Aggregates.UserProfileAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;

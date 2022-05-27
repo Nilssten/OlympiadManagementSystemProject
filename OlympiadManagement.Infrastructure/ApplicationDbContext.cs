@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OlympiadManagement.Core;
-using OlympiadManagement.Core.Aggregates.UserProfileAggregates;
+using OlympiadManagement.Core.Aggregates.EducationAggregate;
+using OlympiadManagement.Core.Aggregates.OlympiadAggregate;
+using OlympiadManagement.Core.Aggregates.UserProfileAggregate;
 using OlympiadManagement.Infrastructure.Configurations;
 using System;
 using System.Collections.Generic;
@@ -20,12 +22,17 @@ namespace OlympiadManagement.Infrastructure
         }
 
 
-        public DbSet<Olympiad> Olympiads { get; set; }
-
+        public DbSet<Olympiad> Olympiads { get; set; } //check
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<OlympiadResult> OlympiadResults { get; set; }
-        public DbSet<UserProfile> UserProfiles { get; set; }
-        public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<OlympiadResult> OlympiadResults { get; set; } //check
+        public DbSet<UserProfile> UserProfiles { get; set; } //check
+        public DbSet<Applicant> Applicants { get; set; } //check
+        public DbSet<Participant> Participants { get; set; } //check
+        public DbSet<Evaluator> Evaluators { get; set; } // check
+        public DbSet<School> Schools { get; set; } //school
+        public DbSet<Archive> Archives { get; set; } //check
+        public DbSet<Organizer> Organizers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -38,12 +45,7 @@ namespace OlympiadManagement.Infrastructure
             builder.ApplyConfiguration(new IdentityUserLoginConfig());
             builder.ApplyConfiguration(new IdentityUserRoleConfig());
             builder.ApplyConfiguration(new IdentityUserTokenConfig());
-
-           
-            
-
-
-
+            builder.ApplyConfiguration(new ArchiveConfig());
 
         }
 

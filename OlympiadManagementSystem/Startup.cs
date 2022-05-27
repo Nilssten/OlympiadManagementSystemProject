@@ -9,7 +9,7 @@ using Microsoft.Extensions.Hosting;
 using OlympiadManagement.Application;
 using OlympiadManagement.Infrastructure;
 using OlympiadManagementSystem.Data;
-using OlympiadManagementSystem.Services;
+using OlympiadManagementSystem.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

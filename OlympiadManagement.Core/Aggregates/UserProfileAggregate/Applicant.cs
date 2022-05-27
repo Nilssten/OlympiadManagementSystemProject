@@ -1,11 +1,11 @@
-﻿using OlympiadManagement.Core.Aggregates.EducationAggregates;
+﻿using OlympiadManagement.Core.Aggregates.EducationAggregate;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OlympiadManagement.Core.Aggregates.UserProfileAggregates
+namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
 {
     public class Applicant
     {

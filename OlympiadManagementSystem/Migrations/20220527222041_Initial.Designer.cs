@@ -10,7 +10,7 @@ using OlympiadManagement.Infrastructure;
 namespace OlympiadManagementSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220524234444_Initial")]
+    [Migration("20220527222041_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,21 @@ namespace OlympiadManagementSystem.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("EvaluatorOlympiad", b =>
+                {
+                    b.Property<Guid>("EvaluatorsEvaluatorID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("OlympiadsOlympiadID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("EvaluatorsEvaluatorID", "OlympiadsOlympiadID");
+
+                    b.HasIndex("OlympiadsOlympiadID");
+
+                    b.ToTable("EvaluatorOlympiad");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -183,7 +198,7 @@ namespace OlympiadManagementSystem.Migrations
                     b.ToTable("UserTokens");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.EducationAggregates.School", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.EducationAggregate.School", b =>
                 {
                     b.Property<Guid>("SchoolID")
                         .ValueGeneratedOnAdd()
@@ -203,10 +218,45 @@ namespace OlympiadManagementSystem.Migrations
 
                     b.HasKey("SchoolID");
 
-                    b.ToTable("School");
+                    b.ToTable("Schools");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Applicant", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.OlympiadAggregate.Archive", b =>
+                {
+                    b.Property<Guid>("ArchiveID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("OlympiadID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ArchiveID");
+
+                    b.HasIndex("OlympiadID");
+
+                    b.ToTable("Archives");
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Admin", b =>
+                {
+                    b.Property<Guid>("AdminID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ProfileUserProfileID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("AdminID");
+
+                    b.HasIndex("ProfileUserProfileID");
+
+                    b.ToTable("Admins");
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Applicant", b =>
                 {
                     b.Property<Guid>("ApplicantID")
                         .ValueGeneratedOnAdd()
@@ -230,7 +280,7 @@ namespace OlympiadManagementSystem.Migrations
                     b.ToTable("Applicants");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Evaluator", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Evaluator", b =>
                 {
                     b.Property<Guid>("EvaluatorID")
                         .ValueGeneratedOnAdd()
@@ -239,31 +289,39 @@ namespace OlympiadManagementSystem.Migrations
                     b.Property<string>("Education")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OlympiadID")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("ProfileID")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("EvaluatorID");
 
-                    b.HasIndex("OlympiadID");
+                    b.HasIndex("ProfileID");
+
+                    b.ToTable("Evaluators");
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Organizer", b =>
+                {
+                    b.Property<Guid>("OrganizerID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProfileID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OrganizerID");
 
                     b.HasIndex("ProfileID");
 
-                    b.ToTable("Evaluator");
+                    b.ToTable("Organizers");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Participant", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Participant", b =>
                 {
                     b.Property<Guid>("ParticipantID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ApplicantID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("OlympiadID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ProfileID")
@@ -276,16 +334,14 @@ namespace OlympiadManagementSystem.Migrations
 
                     b.HasIndex("ApplicantID");
 
-                    b.HasIndex("OlympiadID");
-
                     b.HasIndex("ProfileID");
 
                     b.HasIndex("SchoolID");
 
-                    b.ToTable("Participant");
+                    b.ToTable("Participants");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.UserProfile", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.UserProfile", b =>
                 {
                     b.Property<Guid>("UserProfileID")
                         .ValueGeneratedOnAdd()
@@ -326,10 +382,15 @@ namespace OlympiadManagementSystem.Migrations
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("OrganizerID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OlympiadID");
+
+                    b.HasIndex("OrganizerID");
 
                     b.ToTable("Olympiads");
                 });
@@ -338,6 +399,9 @@ namespace OlympiadManagementSystem.Migrations
                 {
                     b.Property<Guid>("OlympiadResultID")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ArchiveID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
@@ -363,9 +427,26 @@ namespace OlympiadManagementSystem.Migrations
 
                     b.HasKey("OlympiadResultID");
 
+                    b.HasIndex("ArchiveID");
+
                     b.HasIndex("OlympiadID");
 
                     b.ToTable("OlympiadResults");
+                });
+
+            modelBuilder.Entity("OlympiadParticipant", b =>
+                {
+                    b.Property<Guid>("OlympiadsOlympiadID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ParticipantsParticipantID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("OlympiadsOlympiadID", "ParticipantsParticipantID");
+
+                    b.HasIndex("ParticipantsParticipantID");
+
+                    b.ToTable("OlympiadParticipant");
                 });
 
             modelBuilder.Entity("OlympiadResultParticipant", b =>
@@ -383,15 +464,48 @@ namespace OlympiadManagementSystem.Migrations
                     b.ToTable("OlympiadResultParticipant");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Applicant", b =>
+            modelBuilder.Entity("EvaluatorOlympiad", b =>
                 {
-                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregates.UserProfile", "Profile")
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Evaluator", null)
+                        .WithMany()
+                        .HasForeignKey("EvaluatorsEvaluatorID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OlympiadManagement.Core.Olympiad", null)
+                        .WithMany()
+                        .HasForeignKey("OlympiadsOlympiadID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.OlympiadAggregate.Archive", b =>
+                {
+                    b.HasOne("OlympiadManagement.Core.Olympiad", "Olympiad")
+                        .WithMany()
+                        .HasForeignKey("OlympiadID");
+
+                    b.Navigation("Olympiad");
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Admin", b =>
+                {
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.UserProfile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileUserProfileID");
+
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Applicant", b =>
+                {
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.UserProfile", "Profile")
                         .WithMany()
                         .HasForeignKey("ProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OlympiadManagement.Core.Aggregates.EducationAggregates.School", "School")
+                    b.HasOne("OlympiadManagement.Core.Aggregates.EducationAggregate.School", "School")
                         .WithMany()
                         .HasForeignKey("SchoolID");
 
@@ -400,13 +514,9 @@ namespace OlympiadManagementSystem.Migrations
                     b.Navigation("School");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Evaluator", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Evaluator", b =>
                 {
-                    b.HasOne("OlympiadManagement.Core.Olympiad", null)
-                        .WithMany("Evaluators")
-                        .HasForeignKey("OlympiadID");
-
-                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregates.UserProfile", "Profile")
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.UserProfile", "Profile")
                         .WithMany()
                         .HasForeignKey("ProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -415,23 +525,30 @@ namespace OlympiadManagementSystem.Migrations
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Participant", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Organizer", b =>
                 {
-                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Applicant", null)
-                        .WithMany("Participants")
-                        .HasForeignKey("ApplicantID");
-
-                    b.HasOne("OlympiadManagement.Core.Olympiad", null)
-                        .WithMany("Participants")
-                        .HasForeignKey("OlympiadID");
-
-                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregates.UserProfile", "Profile")
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.UserProfile", "Profile")
                         .WithMany()
                         .HasForeignKey("ProfileID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OlympiadManagement.Core.Aggregates.EducationAggregates.School", "School")
+                    b.Navigation("Profile");
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Participant", b =>
+                {
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Applicant", null)
+                        .WithMany("Participants")
+                        .HasForeignKey("ApplicantID");
+
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.UserProfile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OlympiadManagement.Core.Aggregates.EducationAggregate.School", "School")
                         .WithMany()
                         .HasForeignKey("SchoolID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -442,9 +559,9 @@ namespace OlympiadManagementSystem.Migrations
                     b.Navigation("School");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.UserProfile", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.UserProfile", b =>
                 {
-                    b.OwnsOne("OlympiadManagement.Core.Aggregates.UserProfileAggregates.BasicInfo", "BasicInfo", b1 =>
+                    b.OwnsOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.BasicInfo", "BasicInfo", b1 =>
                         {
                             b1.Property<Guid>("UserProfileID")
                                 .HasColumnType("uniqueidentifier");
@@ -489,6 +606,10 @@ namespace OlympiadManagementSystem.Migrations
 
             modelBuilder.Entity("OlympiadManagement.Core.Olympiad", b =>
                 {
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Organizer", null)
+                        .WithMany("Olympiads")
+                        .HasForeignKey("OrganizerID");
+
                     b.OwnsOne("OlympiadManagement.Core.OlympiadRules", "Rules", b1 =>
                         {
                             b1.Property<Guid>("OlympiadID")
@@ -516,6 +637,10 @@ namespace OlympiadManagementSystem.Migrations
 
             modelBuilder.Entity("OlympiadManagement.Core.OlympiadResult", b =>
                 {
+                    b.HasOne("OlympiadManagement.Core.Aggregates.OlympiadAggregate.Archive", null)
+                        .WithMany("OlympiadResults")
+                        .HasForeignKey("ArchiveID");
+
                     b.HasOne("OlympiadManagement.Core.Olympiad", "Olympiad")
                         .WithMany()
                         .HasForeignKey("OlympiadID")
@@ -523,6 +648,21 @@ namespace OlympiadManagementSystem.Migrations
                         .IsRequired();
 
                     b.Navigation("Olympiad");
+                });
+
+            modelBuilder.Entity("OlympiadParticipant", b =>
+                {
+                    b.HasOne("OlympiadManagement.Core.Olympiad", null)
+                        .WithMany()
+                        .HasForeignKey("OlympiadsOlympiadID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Participant", null)
+                        .WithMany()
+                        .HasForeignKey("ParticipantsParticipantID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("OlympiadResultParticipant", b =>
@@ -533,23 +673,26 @@ namespace OlympiadManagementSystem.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Participant", null)
+                    b.HasOne("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Participant", null)
                         .WithMany()
                         .HasForeignKey("ParticipantID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregates.Applicant", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.OlympiadAggregate.Archive", b =>
+                {
+                    b.Navigation("OlympiadResults");
+                });
+
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Applicant", b =>
                 {
                     b.Navigation("Participants");
                 });
 
-            modelBuilder.Entity("OlympiadManagement.Core.Olympiad", b =>
+            modelBuilder.Entity("OlympiadManagement.Core.Aggregates.UserProfileAggregate.Organizer", b =>
                 {
-                    b.Navigation("Evaluators");
-
-                    b.Navigation("Participants");
+                    b.Navigation("Olympiads");
                 });
 #pragma warning restore 612, 618
         }
