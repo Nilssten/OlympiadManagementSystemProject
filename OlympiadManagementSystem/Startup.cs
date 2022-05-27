@@ -9,10 +9,12 @@ using Microsoft.Extensions.Hosting;
 using OlympiadManagement.Application;
 using OlympiadManagement.Infrastructure;
 using OlympiadManagementSystem.Data;
+using OlympiadManagementSystem.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OlympiadManagementSystem.Extensions;
 
 namespace OlympiadManagementSystem
 {
@@ -29,43 +31,23 @@ namespace OlympiadManagementSystem
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
-            services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
 
-            services.AddDbContext<OlympiadDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("Default"),
-                b => b.MigrationsAssembly("OlympiadManagementSystem")));
-
-            //services.AddScoped<IOlympiadRepository, OlympiadRepository>();
-            //services.AddScoped<IOlympiadService, OlympiadService>();
-
+            services.RegisterServices(Configuration, typeof(Program));
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
+            app.RegisterPipelineComponents(env, typeof(Program));
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapBlazorHub();
                 endpoints.MapFallbackToPage("/_Host");
             });
+         
         }
     }
 }

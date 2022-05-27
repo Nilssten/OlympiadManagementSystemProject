@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace OlympiadManagement.Infrastructure
 {
-    public class OlympiadDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext
     {
 
-        public OlympiadDbContext(DbContextOptions<OlympiadDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }

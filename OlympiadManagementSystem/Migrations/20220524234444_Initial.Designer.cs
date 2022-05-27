@@ -9,7 +9,7 @@ using OlympiadManagement.Infrastructure;
 
 namespace OlympiadManagementSystem.Migrations
 {
-    [DbContext(typeof(OlympiadDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     [Migration("20220524234444_Initial")]
     partial class Initial
     {

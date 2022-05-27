@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Models\" />
-    <Folder Include="Data\Services\" />
+    <Folder Include="Data\Models\" />
   </ItemGroup>
 
 </Project>

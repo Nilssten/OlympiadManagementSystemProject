@@ -8,7 +8,7 @@ using OlympiadManagement.Infrastructure;
 
 namespace OlympiadManagementSystem.Migrations
 {
-    [DbContext(typeof(OlympiadDbContext))]
+    [DbContext(typeof(ApplicationDbContext))]
     partial class OlympiadDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
