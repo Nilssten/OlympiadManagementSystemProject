@@ -40,6 +40,8 @@ namespace OlympiadManagement.Infrastructure
             builder.ApplyConfiguration(new IdentityUserTokenConfig());
 
            
+
+           
             
 
 

@@ -21,37 +21,93 @@ namespace OlympiadManagement.Infrastructure
 
         public async Task<Olympiad> CreateOlympiadAsync(Olympiad olympiad)
         {
-            using var ctx = _dbFactory.CreateDbContext();
-            ctx.Olympiads.Add(olympiad);
-            await ctx.SaveChangesAsync();
-            return olympiad;
+            try
+            {
+                using var ctx = _dbFactory.CreateDbContext();
+                ctx.Olympiads.Add(olympiad);
+                await ctx.SaveChangesAsync();
+                return olympiad;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public async Task DeleteOlympiadAsync(string ID)
         {
-            using var ctx = _dbFactory.CreateDbContext();
-            var olympiad = ctx.Olympiads.FirstOrDefault(ol => ol.OlympiadID.ToString() == ID);
-            ctx.Olympiads.Remove(olympiad);
-            await ctx.SaveChangesAsync();
+
+            try
+            {
+                using var ctx = _dbFactory.CreateDbContext();
+                var olympiad = await ctx.Olympiads.FirstOrDefaultAsync(ol => ol.OlympiadID == Guid.Parse(ID));
+
+                //to refactor
+                if (olympiad is null)
+                    return;
+
+                ctx.Olympiads.Remove(olympiad);
+                await ctx.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
+
+
+
+            
         }
 
         public async Task<Olympiad> GetOlympiadAsync(string ID)
         {
-            using var ctx = _dbFactory.CreateDbContext();
-            return await ctx.Olympiads.FirstOrDefaultAsync(ol => ol.OlympiadID.ToString() == ID);
+            try
+            {
+                using var ctx = _dbFactory.CreateDbContext();
+                return await ctx.Olympiads.FirstOrDefaultAsync(ol => ol.OlympiadID == Guid.Parse(ID));
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            
         }
 
         public async Task<List<Olympiad>> GetOlympiadsAsync()
         {
-            using var ctx = _dbFactory.CreateDbContext();
-            return await ctx.Olympiads.ToListAsync();
+            try
+            {
+                using var ctx = _dbFactory.CreateDbContext();
+                return await ctx.Olympiads.ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         public async Task UpdateOlympiadAsync(Olympiad olympiad)
         {
-            using var ctx = _dbFactory.CreateDbContext();
+            try
+            {
+                using var ctx = _dbFactory.CreateDbContext();
             ctx.Olympiads.Update(olympiad);
             await ctx.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
     }
 }

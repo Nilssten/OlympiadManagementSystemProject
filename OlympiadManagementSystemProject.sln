@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.32510.428
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlympiadManagementSystem", "OlympiadManagementSystem\OlympiadManagementSystem.csproj", "{D4AA24AF-8168-4BF5-B592-8C3BBB4C73E6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympiadManagement.Core", "OlympiadManagement.Core\OlympiadManagement.Core.csproj", "{334243CE-6AFE-4D6D-A6C3-749BCF58D8F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlympiadManagement.Core", "OlympiadManagement.Core\OlympiadManagement.Core.csproj", "{334243CE-6AFE-4D6D-A6C3-749BCF58D8F9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympiadManagement.Application", "OlympiadManagement.Application\OlympiadManagement.Application.csproj", "{349C1A80-BE65-4984-8609-8CBF88E590D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlympiadManagement.Application", "OlympiadManagement.Application\OlympiadManagement.Application.csproj", "{349C1A80-BE65-4984-8609-8CBF88E590D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OlympiadManagement.Infrastructure", "OlympiadManagement.Infrastructure\OlympiadManagement.Infrastructure.csproj", "{53FAD162-324A-4FDC-B580-6BA64C1C32CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OlympiadManagement.Infrastructure", "OlympiadManagement.Infrastructure\OlympiadManagement.Infrastructure.csproj", "{53FAD162-324A-4FDC-B580-6BA64C1C32CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
