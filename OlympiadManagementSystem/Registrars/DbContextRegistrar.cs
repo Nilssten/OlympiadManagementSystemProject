@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OlympiadManagementSystem.Registers
+namespace OlympiadManagementSystem.Registrars
 {
     public class DbContextRegistrar : IServiceCollectionRegistrar
     {
@@ -17,7 +17,8 @@ namespace OlympiadManagementSystem.Registers
         {
 
             services.AddDbContextFactory<ApplicationDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("Default"),
-                b => b.MigrationsAssembly("OlympiadManagementSystem")));
+    b => b.MigrationsAssembly("OlympiadManagementSystem")));
+            services.AddScoped<ApplicationDbContext>(p => p.GetRequiredService<IDbContextFactory<ApplicationDbContext>>().CreateDbContext());
         }
     }
 }

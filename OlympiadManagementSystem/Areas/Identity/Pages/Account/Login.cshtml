@@ -1,0 +1,37 @@
+﻿@page "/login"
+@model OlympiadManagementSystem.Areas.Identity.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Log in";
+}
+
+
+<h1>@ViewData["Title"]</h1>
+<div class="row" style="margin:50px">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h2>Use a local account to log in</h2>
+                <hr />
+
+
+                <div asp-validation-summary="ModelOnly" class="" text-danger"></div>
+                <div class="form-floating" style="margin:10px">
+                    <input asp-for="Input.UserName" class="form-control" autocomplete="username" aria-required="true" />
+                    <label asp-for="Input.UserName" class="col-form-label">User Name</label>
+                    <span asp-validation-for="Input.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-floating" style="margin:10px">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="username" aria-required="true" />
+                    <label asp-for="Input.Password" class="col-form-label"></label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div style="margin:10px">
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Login</button>
+                </div>
+
+                @*reminder*@
+                <p>For all users auth is done through email except superadmin , he logs in by username thats why temporary form input is plain text type</p>
+            </form>
+        </section>
+    </div>
+</div>

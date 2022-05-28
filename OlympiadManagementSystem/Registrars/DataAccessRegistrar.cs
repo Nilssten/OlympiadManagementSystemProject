@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace OlympiadManagementSystem.Registers
+namespace OlympiadManagementSystem.Registrars
 {
     public class DataAccessRegistrar : IServiceCollectionRegistrar
     {

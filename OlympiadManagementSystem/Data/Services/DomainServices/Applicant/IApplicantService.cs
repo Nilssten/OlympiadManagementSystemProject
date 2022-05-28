@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OlympiadManagementSystem.Data.Services.DomainServices
 {
-    interface IApplicantService : IApplicantRepository
+    public interface IApplicantService : IApplicantRepository
     {
     }
 }

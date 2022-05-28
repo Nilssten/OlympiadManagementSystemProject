@@ -1,0 +1,17 @@
+﻿@page "/logout"
+@using OlympiadManagement.Infrastructure.IdentityModels;
+@attribute [IgnoreAntiforgeryToken]
+@inject SignInManager<AppUser> signInManager
+
+
+@functions{
+    public async Task<IActionResult> OnGet()
+    {
+        if (signInManager.IsSignedIn(User))
+        {
+            await signInManager.SignOutAsync();
+        }
+
+        return Redirect("~/");
+    }
+}

@@ -29,17 +29,17 @@ namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
             
         }
 
-        public void RegisterParticipant(Guid profileID , School school , UserProfile profile , Guid schoolID)
+        public void RegisterParticipant( School school , UserProfile profile )
         {
-            var participant = Participant.CreateParticipant(profileID, school , profile ,  schoolID);
+            var participant = Participant.CreateParticipant( school , profile);
             _participants.Add(participant);
         }
 
         //public void RegisterParticipant() { }
 
-        public static Applicant CreateApplicant(string education , UserProfile profile , School school , Guid profileID)
+        public static Applicant CreateApplicant(string education , UserProfile profile , School school )
         {
-            var applicant = new Applicant { Education = education  , Profile = profile , School = school , ProfileID = profileID};
+            var applicant = new Applicant { Education = education  , Profile = profile , School = school };
             return applicant;
         }
 

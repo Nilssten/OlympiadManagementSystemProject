@@ -22,6 +22,11 @@ namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
 
         private BasicInfo() { }
 
+        public static BasicInfo CreateBasicInfo(string email , int personalCode)
+        {
+            return new BasicInfo { Email = email, PersonalCode = personalCode };
+        }
+
         public static BasicInfo CreateBasicInfo(string firstName , string lastName , string email ,
             string adress , DateTime dateOfBirth , int personalCode , string phoneNumber)
         {

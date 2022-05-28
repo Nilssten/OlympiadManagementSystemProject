@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OlympiadManagementSystem.Data.Services.DomainServices
 {
-    interface IUserProfileService : IUserProfileRepository
+    public interface IUserProfileService : IUserProfileRepository
     {
     }
 }

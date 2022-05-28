@@ -30,8 +30,8 @@ namespace OlympiadManagement.Application.Repositories
                 using var ctx = _factory.CreateDbContext();
                 ctx.UserProfiles.Add(profile);
                 await ctx.SaveChangesAsync();
-
                 return profile;
+                //return await ctx.UserProfiles.FirstOrDefaultAsync(up => up.BasicInfo.Email == profile.BasicInfo.Email);
             }
             catch (Exception)
             {

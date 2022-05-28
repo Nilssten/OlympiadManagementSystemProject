@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using OlympiadManagement.Core;
 using OlympiadManagement.Core.Aggregates.EducationAggregate;
 using OlympiadManagement.Core.Aggregates.OlympiadAggregate;
 using OlympiadManagement.Core.Aggregates.UserProfileAggregate;
 using OlympiadManagement.Infrastructure.Configurations;
+using OlympiadManagement.Infrastructure.IdentityModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace OlympiadManagement.Infrastructure
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<AppUser, AppRole , Guid>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -22,15 +24,16 @@ namespace OlympiadManagement.Infrastructure
         }
 
 
-        public DbSet<Olympiad> Olympiads { get; set; } //check
+        public DbSet<AppUser> Identities { get; set; }
+        public DbSet<Olympiad> Olympiads { get; set; }
         public DbSet<Admin> Admins { get; set; }
-        public DbSet<OlympiadResult> OlympiadResults { get; set; } //check
-        public DbSet<UserProfile> UserProfiles { get; set; } //check
-        public DbSet<Applicant> Applicants { get; set; } //check
-        public DbSet<Participant> Participants { get; set; } //check
-        public DbSet<Evaluator> Evaluators { get; set; } // check
-        public DbSet<School> Schools { get; set; } //school
-        public DbSet<Archive> Archives { get; set; } //check
+        public DbSet<OlympiadResult> OlympiadResults { get; set; }
+        public DbSet<UserProfile> UserProfiles { get; set; }
+        public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<Participant> Participants { get; set; }
+        public DbSet<Evaluator> Evaluators { get; set; }
+        public DbSet<School> Schools { get; set; }
+        public DbSet<Archive> Archives { get; set; }
         public DbSet<Organizer> Organizers { get; set; }
 
 
@@ -42,10 +45,12 @@ namespace OlympiadManagement.Infrastructure
             builder.ApplyConfiguration(new ParticipantConfig());
             builder.ApplyConfiguration(new SchoolConfiguration());
             builder.ApplyConfiguration(new UserProfileConfig());
-            builder.ApplyConfiguration(new IdentityUserLoginConfig());
-            builder.ApplyConfiguration(new IdentityUserRoleConfig());
-            builder.ApplyConfiguration(new IdentityUserTokenConfig());
             builder.ApplyConfiguration(new ArchiveConfig());
+
+            base.OnModelCreating(builder);
+
+            
+
 
         }
 

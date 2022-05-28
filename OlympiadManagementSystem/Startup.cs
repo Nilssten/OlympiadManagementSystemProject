@@ -15,6 +15,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OlympiadManagementSystem.Extensions;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
+using OlympiadManagementSystem.Application.Enums;
 
 namespace OlympiadManagementSystem
 {
@@ -33,6 +36,15 @@ namespace OlympiadManagementSystem
         {
 
             services.RegisterServices(Configuration, typeof(Program));
+            
+            services.AddAuthorization(opt => {
+                opt.AddPolicy("SamplePolicy", policy => policy.RequireClaim(ClaimTypes.Role, Roles.ADMIN));
+            });
+
+
+            //This method initializes all roles by adding them to DB and assigning an superadmin 
+            //Task.Run(() => RolesInitializer.CreateRoles(services, Configuration)).Wait();
+            
 
         }
 
@@ -49,5 +61,7 @@ namespace OlympiadManagementSystem
             });
          
         }
+
+        
     }
 }

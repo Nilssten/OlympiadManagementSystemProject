@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
 {
-    public class UserProfile
+    public class UserProfile 
     {
 
         public Guid UserProfileID { get;private set; }
 
-        public string Identity { get;private set; }
+        //public string Identity { get;private set; }
 
         public BasicInfo BasicInfo { get;private set; }
 
@@ -26,11 +27,11 @@ namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
 
         protected UserProfile() {}
 
-        public static UserProfile CreateUserProfile(string identity , BasicInfo basicInfo)
+        public static UserProfile CreateUserProfile(BasicInfo basicInfo)
         {
             var userProfile = new UserProfile {
 
-                Identity = identity,
+                //Identity = identity,
                 BasicInfo = basicInfo,
                 DateCreated = DateTime.UtcNow,
                 LastModified = DateTime.UtcNow

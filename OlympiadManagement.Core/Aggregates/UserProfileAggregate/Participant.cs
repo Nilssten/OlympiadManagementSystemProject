@@ -41,12 +41,10 @@ namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
             _olympiadResults.Add(olympiadResult);
         }
 
-        public static Participant CreateParticipant(Guid profileID, School school , UserProfile profile , Guid schoolD)
+        public static Participant CreateParticipant( School school , UserProfile profile)
         {
             var participant = new Participant
             {
-                ProfileID = profileID,
-                SchoolID = schoolD,
                 Profile = profile,
                 School = school
             };
