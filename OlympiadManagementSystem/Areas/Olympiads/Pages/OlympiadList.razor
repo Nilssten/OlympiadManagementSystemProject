@@ -1,0 +1,32 @@
+﻿<h3>OlympiadList</h3>
+@page "/olympiad/explore"
+
+
+
+
+<h2>Olympiad List </h2>
+
+@if (Busy)
+{
+    <p>Loading...</p>
+}
+else if (Olympiads.Count == 0)
+{
+    <p>No olympiads created yet</p>
+}
+else if (Error == true)
+{
+    <p>Error occured: @ErrorMessage</p>
+}
+else
+{
+    <ul>
+
+        @foreach (var item in Olympiads)
+        {
+            <li>
+                Olympiad No @item.OlympiadID : @item.Subject
+            </li>
+        }
+    </ul>
+}

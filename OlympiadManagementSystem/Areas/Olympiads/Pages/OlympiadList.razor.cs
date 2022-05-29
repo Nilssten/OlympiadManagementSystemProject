@@ -1,36 +1,30 @@
+﻿using Microsoft.AspNetCore.Components;
+using OlympiadManagement.Core;
+using OlympiadManagementSystem.Data.Services.DomainServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using OlympiadManagement.Core;
-using OlympiadManagementSystem.Data.Services.DomainServices;
 
 namespace OlympiadManagementSystem.Areas.Olympiads.Pages
 {
-    public class OlympiadListModel : PageModel
+    public partial class OlympiadList : ComponentBase
     {
-        private IOlympiadService _olympiadService;
+        [Inject] public IOlympiadService OlympiadService { get; set; }
 
-       
+
         public bool Busy { get; set; } = false;
- 
+
         public bool Error { get; set; } = false;
         public string ErrorMessage { get; set; }
         public List<Olympiad> Olympiads { get; set; }
 
-        public OlympiadListModel(IOlympiadService olympiadService)
-        {
-            _olympiadService = olympiadService;
-        }
-
-        public async Task OnGet()
+        protected override async Task OnInitializedAsync()
         {
             try
             {
                 Busy = true;
-                Olympiads = await _olympiadService.GetOlympiadsAsync();
+                Olympiads = await OlympiadService.GetOlympiadsAsync();
             }
             catch (Exception ex)
             {
@@ -41,7 +35,8 @@ namespace OlympiadManagementSystem.Areas.Olympiads.Pages
             {
                 Busy = false;
             }
-
         }
+
+        
     }
 }
