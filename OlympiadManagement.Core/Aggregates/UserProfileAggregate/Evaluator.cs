@@ -36,10 +36,10 @@ namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
             _olympiads.Remove(item);
         }
 
-        public static Evaluator CreateEvaluator(UserProfile profile , string education , Guid profileID)
+        public static Evaluator CreateEvaluator(UserProfile profile , string education )
         {
 
-            var evaluator = new Evaluator { Profile = profile, Education = education , ProfileID = profileID };
+            var evaluator = new Evaluator { Profile = profile, Education = education  };
             return evaluator;
 
         }

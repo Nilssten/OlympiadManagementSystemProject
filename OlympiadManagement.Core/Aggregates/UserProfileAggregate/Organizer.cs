@@ -33,10 +33,10 @@ namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
             _olympiads.Remove(item);
         }
 
-        public static Organizer CreateOrganizer(UserProfile profile, Guid profileID)
+        public static Organizer CreateOrganizer(UserProfile profile)
         {
 
-            var organizer = new Organizer { Profile = profile, ProfileID = profileID };
+            var organizer = new Organizer { Profile = profile};
             return organizer;
 
         }

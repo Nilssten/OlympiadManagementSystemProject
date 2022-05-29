@@ -18,7 +18,7 @@ namespace OlympiadManagement.Core.Aggregates.UserProfileAggregate
 
         }
 
-        public static Admin CreateSuperAdmin(UserProfile profile)
+        public static Admin CreateAdmin(UserProfile profile)
         {
             var superAdmin = new Admin { Profile = profile };
             return superAdmin;
