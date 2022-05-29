@@ -12,12 +12,13 @@ using OlympiadManagement.Core.Aggregates.UserProfileAggregate;
 using OlympiadManagement.Infrastructure.IdentityModels;
 using OlympiadManagementSystem.Application.Enums;
 using OlympiadManagementSystem.Data.Services.DomainServices;
+using OlympiadManagementSystem.Data.Services.Tools;
 
 namespace OlympiadManagementSystem.Areas.Identity.Pages.Account
 {
     public partial class Registration : PageModel
     {
-
+    
         private  UserManager<AppUser> _userManager;
         private  SignInManager<AppUser> _signInManager; 
         private  IApplicantService _applicantService;
@@ -77,6 +78,7 @@ namespace OlympiadManagementSystem.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [DataType(DataType.EmailAddress)]
             [EmailAddress]
             public string Email { get; set; }
 
@@ -84,11 +86,45 @@ namespace OlympiadManagementSystem.Areas.Identity.Pages.Account
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
-            //[Required]
-            //public string Role { get; set; }
+            [MinLength(2)]
+            public string FirstName { get; private set; }
+            public string LastName { get; private set; }
+            public string Adress { get; private set; }
+            public DateTime DateOfBirth { get; private set; }
+            public int Gender { get; private set; }
+            public string PhoneNumber { get; private set; }
+
+            public string City { get; private set; }
+
 
             [Required]
             public int PersonalCode { get; set; }
+
+            public static InputModel CreateBasicInfo(string email, int personalCode)
+            {
+                return new InputModel { Email = email, PersonalCode = personalCode };
+            }
+
+            public static InputModel CreateBasicInfo(string firstName, string lastName, string email,
+                string adress, DateTime dateOfBirth, int personalCode, string phoneNumber)
+            {
+
+                var basicInfo = new InputModel
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    Email = email,
+                    Adress = adress,
+                    DateOfBirth = dateOfBirth,
+                    PersonalCode = personalCode,
+                    PhoneNumber = phoneNumber
+                };
+
+                return basicInfo;
+
+
+            }
         }
     }
+
 }

@@ -3,7 +3,7 @@
 
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Registration";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -11,34 +11,68 @@
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
-                <h2>Use a local account to log in</h2>
+                <h2>Registration form</h2>
                 <hr />
 
 
                 <div asp-validation-summary="ModelOnly" class="" text-danger"></div>
                 <div class="form-floating" style="margin:10px">
+                    <label>First name</label>
+                    <input asp-for="Input.FirstName" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-floating" style="margin:10px">
+                    <label>Last name</label>
+                    <input asp-for="Input.LastName" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-floating" style="margin:10px">
+                    <label>Email</label>
                     <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
-                    <label asp-for="Input.Email" class="col-form-label"></label>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating" style="margin:10px">
+                    <label>Adress</label>
+                    <input asp-for="Input.Adress" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.Adress" class="text-danger"></span>
+                </div>
+                <div class="form-floating" style="margin:10px">
+                    <label>Password</label>
                     <input asp-for="Input.Password" class="form-control" autocomplete="username" aria-required="true" />
-                    <label asp-for="Input.Password" class="col-form-label"></label>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
-                @*<div class="form-floating" style="margin:10px">
-                    <input type="radio" asp-for="Input.Role" value="Admin" />
-                    <label asp-for="Input.Role" class="col-form-label">Admin</label>
-                    <input type="radio" asp-for="Input.Role" value="Applicant" />
-                    <label asp-for="Input.Role" class="col-form-label">Applicant</label>
-                    <span asp-validation-for="Input.Role" class="text-danger"></span>
-                </div>*@
                 <div class="form-floating" style="margin:10px">
-                    <input type="number" asp-for="Input.PersonalCode" style="margin:10px"/>
-                    <label asp-for="Input.PersonalCode" class="col-form-label">Admin</label>
-                    <span asp-validation-for="Input.PersonalCode" class="text-danger"></span>
-                    
+                    <label>Date of Birth</label>
+                    <input asp-for="Input.DateOfBirth" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.DateOfBirth" class="text-danger"></span>
                 </div>
+                <div class="form-floating" style="margin:10px">
+                    <label>Gender</label>
+                    <input asp-for="Input.Gender" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.Gender" class="text-danger"></span>
+                </div>
+                <div class="form-floating" style="margin:10px">
+                    <label>Phone number</label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-floating" style="margin:10px">
+                    <label>City</label>
+                    <input asp-for="Input.City" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.City" class="text-danger"></span>
+                </div>
+                <div class="form-floating" style="margin:10px">
+                    <label>Personal code</label>
+                    <input asp-for="Input.PersonalCode" class="form-control" autocomplete="username" aria-required="true" />
+                    <span asp-validation-for="Input.PersonalCode" class="text-danger"></span>
+                </div>
+                @*<div class="form-floating" style="margin:10px">
+            <input type="radio" asp-for="Input.Role" value="Admin" />
+            <label asp-for="Input.Role" class="col-form-label">Admin</label>
+            <input type="radio" asp-for="Input.Role" value="Applicant" />
+            <label asp-for="Input.Role" class="col-form-label">Applicant</label>
+            <span asp-validation-for="Input.Role" class="text-danger"></span>
+        </div>*@
                 <div style="margin:10px">
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
                 </div>
