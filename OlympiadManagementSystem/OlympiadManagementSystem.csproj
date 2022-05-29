@@ -32,7 +32,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administrative\Pages\OlympiadManagement\" />
-    <Folder Include="Areas\UI\" />
+    <Folder Include="Areas\UI\Components\" />
   </ItemGroup>
 
 </Project>
