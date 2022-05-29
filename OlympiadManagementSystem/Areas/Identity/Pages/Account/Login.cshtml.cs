@@ -13,7 +13,7 @@ namespace OlympiadManagementSystem.Areas.Identity.Pages.Account
     public class LoginModel : PageModel
     {
 
-
+   
 
         private readonly SignInManager<AppUser> _signInManager;
 

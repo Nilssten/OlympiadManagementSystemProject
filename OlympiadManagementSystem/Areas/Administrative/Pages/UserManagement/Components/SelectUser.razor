@@ -1,0 +1,31 @@
+﻿@page "/admin/userList"
+
+<h3>SelectUserListComponent</h3>
+
+<label>Choose user type</label>
+<select name="SelectedUser" @onchange="SelectedUsersChanged">
+    <option disabled="disabled">Select user</option>
+    @if (@SuperAdmin == true)
+    {
+        <option value="admin">Admins</option>
+    }
+    <option value="applicant">Applicant</option>
+    <option value="participant">Participants</option>
+    <option value="organizer">Organizers</option>
+    <option value="evaluator">Evaluators</option>
+</select>
+
+<p>
+    @if (SelectedUser is not null)
+    {
+        <h2>@SelectedUser</h2>
+    }
+</p>
+
+<CascadingValue Value="SelectedUser">
+    <UserList/>
+</CascadingValue>
+
+<a href="admin/createUser" class="btn btn-lg btn-success">
+    Create user
+</a>

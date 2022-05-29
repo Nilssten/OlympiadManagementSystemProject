@@ -1,0 +1,13 @@
+﻿<h3>UserList</h3>
+
+@if (AppUsers is not null)
+{
+    foreach (var item in AppUsers)
+    {
+                    <p>@item.UserName</p>
+    }
+}
+else
+{
+    <p>No users found</p>
+}
